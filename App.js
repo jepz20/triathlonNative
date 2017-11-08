@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducers'
 import AddEntry from './components/AddEntry'
 import History from './components/History'
-import { SafeAreaView, TabNavigator, StackNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator } from 'react-navigation'
 import { purple, white } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
@@ -14,7 +14,7 @@ import Live from './components/Live'
 
 function JStatusBar ({ backgroundColor, ...props}) {
   return (
-    <View style={{ backgroundColor }}>
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
       <StatusBar traslucent backgroundColor={backgroundColor} {...props} />
     </View>
   )
@@ -81,10 +81,10 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={createStore(reducer)}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <JStatusBar backgroundColor={purple} barStyle="light-content" />
           <MainNavigator />
-        </SafeAreaView>
+        </View>
       </Provider>
     );
   }
