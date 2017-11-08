@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import UdaciFitnessCalendar from 'udacifitness-calendar'
 import { AppLoading } from 'expo'
@@ -42,13 +42,17 @@ class History extends Component {
               </Text>
             </View>
           : <TouchableOpacity
-              onPress={() => console.log('Pressed!')}
+              onPress={() => this.props.navigation.navigate(
+                'EntryDetail',
+                { entryId: key }
+              )}
             >
               <MetricCard date={formattedDate} metrics={metrics} />
             </TouchableOpacity>
       }
     </View>
   )
+
   renderEmptyDate(formattedDate) {
     return (
       <View style={styles.item}>
@@ -68,13 +72,15 @@ class History extends Component {
     if (ready === false) {
       return <AppLoading />
     }
-    
+
     return (
-      <UdaciFitnessCalendar
-        items={entries}
-        renderItem={this.renderItem}
-        renderEmptyDate={this.renderEmptyDate}
-      />
+      <ScrollView>
+        <UdaciFitnessCalendar
+          items={entries}
+          renderItem={this.renderItem}
+          renderEmptyDate={this.renderEmptyDate}
+        />
+      </ScrollView>
     )
   }
 }

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getMetricMetaInfo, timeToString, getDailyReminderValue } from '../utils/helpers'
 import { submitEntry, removeEntry } from '../utils/api'
 import { purple, white } from '../utils/colors'
+import { NavigationActions } from 'react-navigation'
 import Jslider from './Jslider'
 import Jstepper from './Jstepper'
 import DateHeader from './DateHeader'
@@ -33,9 +34,16 @@ class AddEntry extends Component {
     this.props.dispatch(addEntry({
       [key]: getDailyReminderValue()
     }))
-    // Route to Home
-    // Update DB
+
+    this.toHome()
+
     removeEntry(key)
+  }
+
+  toHome = () => {
+    this.props.navigation.dispatch(NavigationActions.back({
+      key: 'AddEntry'
+    }))
   }
 
   submit = () => {
@@ -49,7 +57,8 @@ class AddEntry extends Component {
       Object.keys(prevState).forEach(key => prevState[key] = 0)
       return prevState
     })
-    // Navigate to home
+
+    this.toHome()
 
     submitEntry({ key, entry })
     //Clear local notification
